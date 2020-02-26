@@ -18,8 +18,8 @@ $(BUILD_DIR):
 .PHONY : compile
 .PHONY : run
 
-run:
-	$(BUILD_DIR)/main.o	
+run: | compile
+	./$(BUILD_DIR)/$(PROGRAM_NAME)	
 
 #compile the object to .exe and remoe .o files
 compile: $(PROGRAM_NAME) | remove_objs
