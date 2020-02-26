@@ -22,6 +22,6 @@ remove_objs:
 remove_executable:
 	rm -f $(BUILD_DIR)/hello
 
-clean:	| remove_executable
-	rmdir $(BUILD_DIR)
+clean:
+	rm -rf $(BUILD_DIR)
 
