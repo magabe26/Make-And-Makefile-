@@ -2,5 +2,5 @@
 #include <string>
 
 void print(){
-	std::cout << "Hello Word!" <<std::endl;
+	std::cout << "Hello Word 2020!" <<std::endl;
 }
