@@ -3,10 +3,9 @@ BUILD_DIR = build
 hello: main.o
 	g++ -o $(BUILD_DIR)/$@ $(BUILD_DIR)/$?
 
-main.o: main.cpp header.h
+%.o: %.cpp header.h
 	mkdir ./$(BUILD_DIR)
 	g++ -c main.cpp -o $(BUILD_DIR)/$@
-
 
 #prevents make from getting confused by an actual file called clean
 .PHONY : clean
