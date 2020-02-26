@@ -1,0 +1,8 @@
+CFLAGS= -o
+CHANGED_FILES = $?
+OUTPUT_FILES = $@
+COMPILE = gcc $(CHANGED_FILES) $(CFLAGS) $(OUTPUT_FILES)
+
+hello: main.c
+	$(COMPILE)
+
