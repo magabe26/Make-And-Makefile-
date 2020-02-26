@@ -5,7 +5,7 @@ hello: main.o
 
 main.o: main.cpp header.h
 	mkdir ./$(BUILD_DIR)
-	gcc -c main.cpp -o $(BUILD_DIR)/$@
+	g++ -c main.cpp -o $(BUILD_DIR)/$@
 
 
 #prevents make from getting confused by an actual file called clean
