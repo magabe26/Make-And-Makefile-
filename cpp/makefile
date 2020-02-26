@@ -18,10 +18,10 @@ $(BUILD_DIR):
 compile: hello | remove_objs
 
 remove_objs:
-	rm  $(BUILD_DIR)/main.o
+	rm -f $(BUILD_DIR)/main.o
 
 remove_executable:
-	rm 	$(BUILD_DIR)/hello
+	rm -f $(BUILD_DIR)/hello
 
 clean:	| remove_executable remove_objs 
 	rmdir $(BUILD_DIR)
