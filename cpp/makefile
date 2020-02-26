@@ -14,17 +14,19 @@ $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
 
 .PHONY : clean
-.PHONY : remove_objs
-.PHONY : compile
+.PHONY : remove_objects
+.PHONY : executable
 .PHONY : run
 
-run: | compile
+run: | executable
 	./$(BUILD_DIR)/$(PROGRAM_NAME)	
 
-#compile the object to .exe and remoe .o files
-compile: $(PROGRAM_NAME) | remove_objs
+objects: | $(OBJS)
 
-remove_objs: 
+#compile the object to .exe and remoe .o files
+executable: $(PROGRAM_NAME) | remove_objects
+
+remove_objects: 
 	rm -f $(addprefix $(BUILD_DIR)/,$(OBJS))
 
 remove_executable:
