@@ -10,4 +10,5 @@ main.o: main.cpp header.h
 .PHONY = clean
 
 clean:
-	rm $(BUILD_DIR)/main.o
+	rm $(BUILD_DIR)/hello $(BUILD_DIR)/main.o
+	rmdir $(BUILD_DIR)
