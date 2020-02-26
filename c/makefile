@@ -1,7 +1,4 @@
-CFLAGS= -o
-CHANGED_FILES = $?
-OUTPUT_FILES = $@
-COMPILE = gcc $(CHANGED_FILES) $(CFLAGS) $(OUTPUT_FILES)
+include var.mk
 
 hello: main.c
 	$(COMPILE)
