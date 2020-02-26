@@ -13,3 +13,4 @@ hello: main.o
 clean:
 	rm $(BUILD_DIR)/hello $(BUILD_DIR)/main.o
 	rmdir $(BUILD_DIR)
+
