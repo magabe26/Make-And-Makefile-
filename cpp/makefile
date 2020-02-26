@@ -7,7 +7,9 @@ main.o: main.cpp header.h
 	mkdir ./$(BUILD_DIR)
 	gcc -c main.cpp -o $(BUILD_DIR)/$@
 
-.PHONY = clean
+
+#prevents make from getting confused by an actual file called clean
+.PHONY : clean
 
 clean:
 	rm $(BUILD_DIR)/hello $(BUILD_DIR)/main.o
