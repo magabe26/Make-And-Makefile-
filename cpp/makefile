@@ -1,8 +1,13 @@
+#################SETUP#####################
+
 #The build directory
 BUILD_DIR = build
 
 #The name of the executable
 PROGRAM_NAME = hello
+
+###########################################
+
 
 OBJS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 HEADERS := $(wildcard *.h)
