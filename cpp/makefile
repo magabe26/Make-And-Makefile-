@@ -15,6 +15,8 @@ VPATH = .
 
 
 OBJS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+OBJS_PATHS = $(addprefix $(BUILD_DIR)/,$(OBJS))
+EXECUTABLE_PATH = $(BUILD_DIR)/$(PROGRAM_NAME)
 HEADERS := $(wildcard *.h)
 
 #Linking .o files to create the executable
@@ -22,9 +24,9 @@ $(PROGRAM_NAME): $(OBJS)
 	g++ -o $(BUILD_DIR)/$@ $(addprefix $(BUILD_DIR)/,$?)
 
 #Build individual (.o) object files [preferring explicit rule]
-#Using $(patsubst %.h, ,$?) to remove header files
+#Using $(patsubst %.h,,$?) to remove header files
 %.o: %.cpp $(HEADERS) | $(BUILD_DIR) 
-	g++ -c $(patsubst %.h, ,$?) -o $(BUILD_DIR)/$@
+	g++ -c $(patsubst %.h,,$?) -o $(BUILD_DIR)/$@
 
 #Create the build directory
 $(BUILD_DIR):
@@ -38,7 +40,7 @@ $(BUILD_DIR):
 
 #Build and run the executable
 run: | executable
-	./$(BUILD_DIR)/$(PROGRAM_NAME)	
+	./$(EXECUTABLE_PATH)	
 
 #Build object files
 objects: | $(OBJS)
@@ -48,11 +50,11 @@ executable: $(PROGRAM_NAME) | remove_objects
 
 #Remove .o files
 remove_objects: 
-	rm -f $(addprefix $(BUILD_DIR)/,$(OBJS))
+	rm -f $(OBJS_PATHS)
 
 #Remove the executable file
 remove_executable:
-	rm -f $(BUILD_DIR)/$(PROGRAM_NAME)
+	rm -f $(EXECUTABLE_PATH)
 
 #Remove the build directory and everything in it
 clean:	
