@@ -6,6 +6,11 @@ BUILD_DIR = build
 #The name of the executable
 PROGRAM_NAME = hello
 
+#Specifies a list of directories that make should search for both prerequisites and targets of rules
+#Directory names are separated by colons(semi-colons on Windows) or blanks.
+#The order in which directories are listed is the order followed by make in its search
+VPATH = .
+
 ###########################################
 
 
