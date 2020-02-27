@@ -24,9 +24,10 @@ $(PROGRAM_NAME): $(OBJS)
 	g++ -o $(BUILD_DIR)/$@ $(addprefix $(BUILD_DIR)/,$?)
 
 #Build individual (.o) object files [preferring explicit rule]
-#Using $(patsubst %.h,,$?) to remove header files
+#Using $< to exclude header files instead of $(patsubst %.h,,$?) 
+#The automatic variable ‘$<’ is just the first prerequisite whitch is %.cpp
 %.o: %.cpp $(HEADERS) | $(BUILD_DIR) 
-	g++ -c $(patsubst %.h,,$?) -o $(BUILD_DIR)/$@
+	g++ -c $< -o $(BUILD_DIR)/$@
 
 #Create the build directory
 $(BUILD_DIR):
