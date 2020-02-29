@@ -12,6 +12,9 @@ BUILD_DIR = build
 #The name of the executable
 PROGRAM_NAME = hello
 
+#Source file extension
+SFILE_EXTENSION = cpp
+
 #Specifies a list of directories that make should search for both prerequisites and targets of rules
 #Directory names are separated by colons(semi-colons on Windows) or blanks.
 #The order in which directories are listed is the order followed by make in its search
@@ -19,7 +22,7 @@ VPATH = .
 
 ###########################################
 
-OBJS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+OBJS := $(patsubst %.$(SFILE_EXTENSION),%.o,$(wildcard *.$(SFILE_EXTENSION)))
 OBJS_PATHS = $(addprefix $(BUILD_DIR)/,$(OBJS))
 EXECUTABLE_PATH = $(BUILD_DIR)/$(PROGRAM_NAME)
 HEADERS := $(wildcard *.h)
@@ -30,8 +33,8 @@ $(PROGRAM_NAME): $(OBJS)
 
 #Build individual (.o) object files [preferring explicit rule]
 #Using $< to exclude header files instead of $(patsubst %.h,,$?) 
-#The automatic variable ‘$<’ is just the first prerequisite whitch is %.cpp
-%.o: %.cpp $(HEADERS) | $(BUILD_DIR) 
+#The automatic variable ‘$<’ is just the first prerequisite whitch is %.$(SFILE_EXTENSION)
+%.o: %.$(SFILE_EXTENSION) $(HEADERS) | $(BUILD_DIR) 
 	$(CC) -c $(CFLAGS) $< -o $(BUILD_DIR)/$@
 
 #Create the build directory
