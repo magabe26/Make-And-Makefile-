@@ -22,20 +22,29 @@ VPATH = .
 
 ###########################################
 
-OBJS := $(patsubst %.$(SFILE_EXTENSION),%.o,$(wildcard *.$(SFILE_EXTENSION)))
-OBJS_PATHS = $(addprefix $(BUILD_DIR)/,$(OBJS))
-EXECUTABLE_PATH = $(BUILD_DIR)/$(PROGRAM_NAME)
+OBJS := $(addprefix $(BUILD_DIR)/,$(patsubst %.$(SFILE_EXTENSION),%.o,$(wildcard *.$(SFILE_EXTENSION))))
+EXECUTABLE = $(BUILD_DIR)/$(PROGRAM_NAME)
 HEADERS := $(wildcard *.h)
 
 #Linking .o files to create the executable
 $(PROGRAM_NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(addprefix $(BUILD_DIR)/,$?) -o $(BUILD_DIR)/$@
+	$(CC) $(CFLAGS) $? -o $(BUILD_DIR)/$@
 
+#Static Pattern Rule to build .o objects
 #Build individual (.o) object files [preferring explicit rule]
+<<<<<<< HEAD
 #Using $< to exclude header files instead of $(patsubst %.h,,$?) 
 #The automatic variable ‘$<’ is just the first prerequisite whitch is %.$(SFILE_EXTENSION)
 %.o: %.$(SFILE_EXTENSION) $(HEADERS) | $(BUILD_DIR) 
 	$(CC) -c $(CFLAGS) $< -o $(BUILD_DIR)/$@
+=======
+#Using $(subst $(BUILD_DIR)/,,$<) to fix the location of .$(SFILE_EXTENSION) files
+$(OBJS): %.o: %.$(SFILE_EXTENSION)  | $(HEADERS) $(BUILD_DIR) 
+	$(CC) -c $(CFLAGS) $(subst $(BUILD_DIR)/,,$<) -o $@
+	
+#Empty target for non existing .$(SFILE_EXTENSION) files (in build directory) evaluted from %.o from the above Static Pattern Rule
+$(addprefix $(BUILD_DIR)/,$(wildcard *.$(SFILE_EXTENSION))):
+>>>>>>> 6.Using_Static_Pattern_Rules_to_build_objects
 
 #Create the build directory
 $(BUILD_DIR):
@@ -45,21 +54,21 @@ $(BUILD_DIR):
 
 #Build and run the executable
 run: | executable
-	./$(EXECUTABLE_PATH)	
+	./$(EXECUTABLE)	
 
 #Build object files
 objects: | $(OBJS)
 
 #Remove .o files
 remove_objects: 
-	rm -f $(OBJS_PATHS)
+	rm -f $(OBJS)
 
 #Create the executable file and remove .o files
 executable: $(PROGRAM_NAME) | remove_objects
 
 #Remove the executable file
 remove_executable:
-	rm -f $(EXECUTABLE_PATH)
+	rm -f $(EXECUTABLE)
 
 #Remove the build directory and everything in it
 clean:	
