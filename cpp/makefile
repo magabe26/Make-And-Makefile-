@@ -4,7 +4,7 @@
 CC = g++
 
 #Compiler flags while building object files
-CFLAGS = -c
+CFLAGS = -Wall
 
 #The build directory
 BUILD_DIR = build
@@ -26,13 +26,13 @@ HEADERS := $(wildcard *.h)
 
 #Linking .o files to create the executable
 $(PROGRAM_NAME): $(OBJS)
-	$(CC) $(addprefix $(BUILD_DIR)/,$?) -o $(BUILD_DIR)/$@
+	$(CC) $(CFLAGS) $(addprefix $(BUILD_DIR)/,$?) -o $(BUILD_DIR)/$@
 
 #Build individual (.o) object files [preferring explicit rule]
 #Using $< to exclude header files instead of $(patsubst %.h,,$?) 
 #The automatic variable ‘$<’ is just the first prerequisite whitch is %.cpp
 %.o: %.cpp $(HEADERS) | $(BUILD_DIR) 
-	$(CC) $(CFLAGS) $< -o $(BUILD_DIR)/$@
+	$(CC) -c $(CFLAGS) $< -o $(BUILD_DIR)/$@
 
 #Create the build directory
 $(BUILD_DIR):
