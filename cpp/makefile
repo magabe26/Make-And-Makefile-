@@ -33,11 +33,7 @@ $(PROGRAM_NAME): $(OBJS)
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
 
-.PHONY : clean
-.PHONY : remove_objects
-.PHONY : executable
-.PHONY : run
-.PHONY : objects
+.PHONY : clean remove_objects executable run objects
 
 #Build and run the executable
 run: | executable
