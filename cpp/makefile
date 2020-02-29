@@ -32,13 +32,9 @@ $(PROGRAM_NAME): $(OBJS)
 
 #Static Pattern Rule to build .o objects
 #Build individual (.o) object files [preferring explicit rule]
-#Using $(subst $(BUILD_DIR)/,,$<) to fix the location of .$(SFILE_EXTENSION) files
-$(OBJS): %.o: %.$(SFILE_EXTENSION) | $(HEADERS) $(BUILD_DIR) 
-	$(CC) -c $(CFLAGS) $(subst $(BUILD_DIR)/,,$<) -o $@
+$(OBJS): $(BUILD_DIR)/%.o: %.$(SFILE_EXTENSION) | $(HEADERS) $(BUILD_DIR) 
+	$(CC) -c $(CFLAGS) $< -o $@
 	
-#Empty target for non existing .$(SFILE_EXTENSION) files (in build directory) evaluted from %.o from the above Static Pattern Rule
-$(addprefix $(BUILD_DIR)/,$(wildcard *.$(SFILE_EXTENSION))):
-
 #Create the build directory
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
