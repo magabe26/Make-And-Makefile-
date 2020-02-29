@@ -45,11 +45,7 @@ $(LIB_NAME): $(OBJS)
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
 
-.PHONY : clean
-.PHONY : remove_objects
-.PHONY : executable
-.PHONY : run
-.PHONY : objects
+.PHONY : run objects remove_objects executable remove_executable  clean
 
 #Build and run the executable
 run: | executable
@@ -58,12 +54,12 @@ run: | executable
 #Build object files
 objects: | $(OBJS)
 
-#Create the executable file and remove .o files
-executable: $(EXECUTABLE_NAME) | remove_objects
-
 #Remove .o files
 remove_objects: 
 	rm -f $(OBJS_PATHS)
+
+#Create the executable file and remove .o files
+executable: $(EXECUTABLE_NAME) | remove_objects
 
 #Remove the executable file
 remove_executable:
