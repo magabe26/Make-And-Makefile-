@@ -1,5 +1,11 @@
 #################SETUP#####################
 
+#Current compiler to use
+CC = g++
+
+#Compiler flags while building object files
+CFLAGS = -c
+
 #The build directory
 BUILD_DIR = build
 
@@ -31,7 +37,7 @@ HEADERS := $(wildcard *.h)
 
 #Linking .o files to create the executable
 $(LIB_NAME): $(OBJS)
-	g++ -shared -fPIC -Wl,-soname,$(SO_NAME) -o $(BUILD_DIR)/$@ $(addprefix $(BUILD_DIR)/,$?) 
+	$(CC) -shared -fPIC -Wl,-soname,$(SO_NAME) -o $(BUILD_DIR)/$@ $(addprefix $(BUILD_DIR)/,$?) 
 
 #Build individual (.o) object files [preferring explicit rule]
 #Using $< to exclude header files instead of $(patsubst %.h,,$?) 
@@ -39,7 +45,7 @@ $(LIB_NAME): $(OBJS)
 #Generate position independent code using the -fPIC option,
 #Object code intended for use in a shared library must be ‘position-independent
 %.o: %.cpp $(HEADERS) | $(BUILD_DIR) 
-	g++ -c -fPIC $< -o $(BUILD_DIR)/$@
+	$(CC) $(CFLAGS) -fPIC $< -o $(BUILD_DIR)/$@
 
 #Create the build directory
 $(BUILD_DIR):
