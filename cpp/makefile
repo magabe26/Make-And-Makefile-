@@ -31,7 +31,7 @@ $(PROGRAM_NAME): $(OBJS)
 #Build individual (.o) object files [preferring explicit rule]
 #Using $< to exclude header files instead of $(patsubst %.h,,$?) 
 #The automatic variable ‘$<’ is just the first prerequisite whitch is %.cpp
-%.o: %.cpp $(HEADERS) | $(BUILD_DIR) 
+$(OBJS): %.o: %.cpp  | $(HEADERS) $(BUILD_DIR) 
 	$(CC) -c $(CFLAGS) $< -o $(BUILD_DIR)/$@
 
 #Create the build directory
