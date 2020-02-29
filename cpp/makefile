@@ -1,5 +1,11 @@
 #################SETUP#####################
 
+#Current compiler to use
+CC = g++
+
+#Compiler flags while building object files
+CFLAGS = -c
+
 #The build directory
 BUILD_DIR = build
 
@@ -13,7 +19,6 @@ VPATH = .
 
 ###########################################
 
-
 OBJS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 OBJS_PATHS = $(addprefix $(BUILD_DIR)/,$(OBJS))
 EXECUTABLE_PATH = $(BUILD_DIR)/$(PROGRAM_NAME)
@@ -21,13 +26,13 @@ HEADERS := $(wildcard *.h)
 
 #Linking .o files to create the executable
 $(PROGRAM_NAME): $(OBJS)
-	g++ -o $(BUILD_DIR)/$@ $(addprefix $(BUILD_DIR)/,$?)
+	$(CC) $(addprefix $(BUILD_DIR)/,$?) -o $(BUILD_DIR)/$@
 
 #Build individual (.o) object files [preferring explicit rule]
 #Using $< to exclude header files instead of $(patsubst %.h,,$?) 
 #The automatic variable ‘$<’ is just the first prerequisite whitch is %.cpp
 %.o: %.cpp $(HEADERS) | $(BUILD_DIR) 
-	g++ -c $< -o $(BUILD_DIR)/$@
+	$(CC) $(CFLAGS) $< -o $(BUILD_DIR)/$@
 
 #Create the build directory
 $(BUILD_DIR):
