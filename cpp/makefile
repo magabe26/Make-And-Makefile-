@@ -36,7 +36,7 @@ $(PROGRAM_NAME): $(OBJS)
 #Invokes $(MAKE) on the temporary generated .o.makefile to build .o objects
 $(OBJS): $(BUILD_DIR)/%.o: %.$(SFILE_EXTENSION) |  $(BUILD_DIR) 
 	@set -e; rm -f $@.makefile; \
-	$(CC) -M $(CFLAGS) $< > $@.makefile; \
+	$(CC) -M $< > $@.makefile; \
 	echo '	$(CC) -c $(CFLAGS) $$(filter %.$(SFILE_EXTENSION),$$?) -o $@' >> $@.makefile; \
 	$(MAKE) -f $@.makefile; \
 	rm -f $@.makefile;
