@@ -1,0 +1,26 @@
+#Modern Modern compilers can write these rules for you, by looking at the #include lines in the source files.
+#Usually this is done with the ‘-M’ option to the compiler.
+
+g++ -M main.cpp
+
+For GNU compilers, you may wish to use the ‘-MM’ flag instead of ‘-M’. This omits
+prerequisites on system header files.
+
+g++ -MM main.cpp
+
+Example: see the following makefile
+--------------------objects.makefile-------------------------------
+#Generate .o objects files using compiler assistance 
+
+CC = g++
+CPPFLAGS = -fPIC
+SFILE_EXTENSION = cpp
+
+all: $(patsubst %.$(SFILE_EXTENSION),%.o.makefile,$(wildcard *.$(SFILE_EXTENSION)))
+
+%.o.makefile: %.cpp
+	@set -e; rm -f $@; \
+	$(CC) -M $(CPPFLAGS) $< > $@; \
+	echo '	$(CC) -c $(CPPFLAGS) $$(filter %.$(SFILE_EXTENSION),$$?)' >> $@; \
+	$(MAKE) -f $@; \
+	rm -f $@

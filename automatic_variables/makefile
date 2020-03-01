@@ -16,6 +16,11 @@ auto3: arg1 arg2
 auto4: file1
 	print $^
 
+# $* will expand to the stem i.e file
+# arg1(Empty target) is there to avoid errors. ie. force the recep to always run
+file2: %2 : arg1
+	echo $*  
+
 .PHONY : arg1
 .PHONY : arg2
 
