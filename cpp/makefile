@@ -30,11 +30,17 @@ HEADERS := $(wildcard *.h)
 $(PROGRAM_NAME): $(OBJS)
 	$(CC) $(CFLAGS) $? -o $(BUILD_DIR)/$@
 
-#Static Pattern Rule to build .o objects
-#Build individual (.o) object files [preferring explicit rule]
-$(OBJS): $(BUILD_DIR)/%.o: %.$(SFILE_EXTENSION) | $(HEADERS) $(BUILD_DIR) 
-	$(CC) -c $(CFLAGS) $< -o $@
-	
+#Generate .o objects files using compiler assistance 
+#This rule first generate temporary rules to build each individual .o objects
+# taking advantage of the compiler feature to generate rule
+#Invoking $(MAKE) on the temporary generated .o.makefile
+$(OBJS): $(BUILD_DIR)/%.o: %.$(SFILE_EXTENSION) |  $(BUILD_DIR) 
+	@set -e; rm -f $@.makefile; \
+	$(CC) -M $(CFLAGS) $< > $@.makefile; \
+	echo '	$(CC) -c $(CFLAGS) $$(filter %.$(SFILE_EXTENSION),$$?) -o $@' >> $@.makefile; \
+	$(MAKE) -f $@.makefile; \
+	rm -f $@.makefile;
+
 #Create the build directory
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
